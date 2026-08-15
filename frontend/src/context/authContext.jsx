@@ -1,7 +1,7 @@
 //how does Dashboard know user is logged in or wich user it is so we need this
 
 import { createContext,useState,useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged,signOut } from "firebase/auth";
 import auth from "../firebase/auth";
 
 //creates a shared data channel.
@@ -20,9 +20,13 @@ function AuthProvider({children}){
         })
         return unsubscribe //unsubscribe stores the function that is given finally to stop listening
     },[])
+
+    const logout = () => {
+        return signOut(auth)
+    }
     return(
         //Context object(AuthContext) provides a special React component:<AuthContext,provider>
-        <AuthContext.Provider value={{user}}>  {/* user is a object literal */}
+        <AuthContext.Provider value={{user,logout}}>  {/* user is a object literal */}
             {/* "Everything inside me can access the data I'm providing." */}
             {children}
         </AuthContext.Provider>

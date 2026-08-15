@@ -4,8 +4,9 @@ import Signup from "./pages/signup"
 import Event from "./pages/react-quickstart/event"
 import { useContext } from "react"
 import AuthContext from "./context/authContext"
+
 function App(){
-  const {user} = useContext(AuthContext)
+  const {user,logout} = useContext(AuthContext)
   console.log(user)
   return(
     <>
@@ -13,7 +14,13 @@ function App(){
       <Signup/>
       <Lists></Lists>
       <Event></Event>
+
       <div>
+        {user&&(
+          <button onClick={logout}>
+            Logout
+          </button>
+        )}
         <h1>ShopDesk</h1>
       </div>
     </>
