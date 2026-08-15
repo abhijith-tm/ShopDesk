@@ -1,15 +1,14 @@
 import { useState } from "react"
 import {createUserWithEmailAndPassword} from "firebase/auth"
 import auth from "../firebase/auth";
-import app from "../firebase/config"
 function Signup(){
 
     const [email,setEmail] =useState("") 
     const [password, setPassword] = useState("");
 
 
-    const handleSignup = async(e)=>{
-        e.preventDefault()
+    const handleSignup = async (e)=>{
+        e.preventDefault() // prevents default browser action of submiting form 
 
         try{
             const userCredential = await createUserWithEmailAndPassword(
@@ -24,13 +23,15 @@ function Signup(){
 
         
         <div>
-             <h1>Signup</h1>
-            <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <br/>
-            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <br />
+            <h1>Signup</h1>
+            <form onSubmit={handleSignup}>
+                <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <br/>
+                <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <br />
 
-            <button onClick={handleSignup}>Signup</button>
+                <button type="submit">Signup</button>
+            </form>
         </div>
     )
 }
