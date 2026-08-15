@@ -4,16 +4,22 @@ import Signup from "./pages/signup"
 import Event from "./pages/react-quickstart/event"
 import { useContext } from "react"
 import AuthContext from "./context/authContext"
+import {BrowserRouter,Routes,Route} from "react-router-dom"
 
 function App(){
   const {user,logout} = useContext(AuthContext)
   console.log(user)
   return(
     <>
-      <Login/>
-      <Signup/>
-      <Lists></Lists>
-      <Event></Event>
+            <BrowserRouter>
+            <Routes>
+
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+
+            </Routes>
+        </BrowserRouter>
+
 
       <div>
         {user&&(
