@@ -5,10 +5,11 @@ import Event from "./pages/react-quickstart/event"
 import { useContext } from "react"
 import AuthContext from "./context/authContext"
 import {BrowserRouter,Routes,Route} from "react-router-dom"
+import Dashboard from "./pages/dashboard"
+import ProtectedRoute from "./components/protectedRoute"
 
 function App(){
   const {user,logout} = useContext(AuthContext)
-  console.log(user)
   return(
     <>
             <BrowserRouter>
@@ -17,18 +18,25 @@ function App(){
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
 
+                <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard/>
+                  </ProtectedRoute>}/>
+
             </Routes>
         </BrowserRouter>
 
 
-      <div>
+      {/* <div>
         {user&&(
           <button onClick={logout}>
             Logout
           </button>
         )}
         <h1>ShopDesk</h1>
-      </div>
+      </div> */}
     </>
 
   )

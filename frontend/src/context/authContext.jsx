@@ -12,11 +12,14 @@ const AuthContext = createContext();
 function AuthProvider({children}){
 
     const [user,setUser] = useState(null);
+    const [loading,setLoading] = useState(true)
 
     //used to handle things outside of react render
     useEffect(()=>{
-        const unsubscribe = onAuthStateChanged(auth,(currentUser)=>{ //pnstste change the arrow ftn runs
+        const unsubscribe = onAuthStateChanged(auth,(currentUser)=>{ //on stste change the arrow ftn runs
             setUser(currentUser)
+            setLoading(false)
+    
         })
         return unsubscribe //unsubscribe stores the function that is given finally to stop listening
     },[])
@@ -26,7 +29,7 @@ function AuthProvider({children}){
     }
     return(
         //Context object(AuthContext) provides a special React component:<AuthContext,provider>
-        <AuthContext.Provider value={{user,logout}}>  {/* user is a object literal */}
+        <AuthContext.Provider value={{user,logout,loading}}>  {/* user is a object literal */}
             {/* "Everything inside me can access the data I'm providing." */}
             {children}
         </AuthContext.Provider>
