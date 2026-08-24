@@ -67,8 +67,8 @@ The application will eventually provide:
 - [ ] Inventory reports
 
 ### Frontend
-- [ ] React setup
-- [ ] Authentication
+- [x] React setup
+- [x] Authentication
 - [ ] Product management
 - [ ] Sales/POS screen
 - [ ] Sales history
