@@ -9,3 +9,8 @@ class SaleItemCreateSerializer(serializers.Serializer):
 
 class SaleCreateSerializer(serializers.Serializer):
     items = SaleItemCreateSerializer(many=True)
+
+#return a response to react after creating sale
+class SaleCreateResponseSerializer(serializers.Serializer):
+    id = serializers.PrimaryKeyRelatedField(queryset=Sale.objects.all())
+    status = serializers.CharField()
