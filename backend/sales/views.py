@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView,UpdateAPIView
 from .models import Sale
-from .serializers import SaleCreateSerializer,SaleCreateResponseSerializer
-from .services import create_sale
+from .serializers import SaleCreateSerializer,SaleCreateResponseSerializer,SaleCancelSerializer,SaleCancelResponseSerializer
+from .services import create_sale,cancel_sale
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -21,4 +21,23 @@ class CreateSaleView(CreateAPIView):
         return Response(
             response_serializer.data,
             status = status.HTTP_201_CREATED
+        )
+
+class CancelSaleView(UpdateAPIView):
+    queryset = Sale.objects.all()
+    serializer_class = SaleCancelSerializer
+
+    def update(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        pk = self.kwargs.get("pk")
+
+        sale = cancel_sale(pk,serializer.validated_data["cancel_reason"],"not implemented")
+
+        response_serializer = SaleCancelResponseSerializer(sale)
+
+        return Response(
+            response_serializer.data,
+            status = status.HTTP_200_OK
         )

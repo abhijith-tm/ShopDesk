@@ -47,7 +47,7 @@ def cancel_sale(sale_id,reason,user):
     
 
     sale.status = "cancelled"
-    sale.cancellation_reason = reason
+    sale.cancel_reason = reason
     sale.cancelled_by = user
     sale.cancelled_at = timezone.now()
 

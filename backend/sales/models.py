@@ -32,12 +32,12 @@ class Sale(models.Model):
 	)
 
     cancelled_by = models.CharField(
-        max_length=10,
+        max_length=20,
         choices=Users.choices,
         null=True
 	)
 
-    cancellation_reason = models.CharField(
+    cancel_reason = models.CharField(
         null=True,
         max_length=200
 	)
