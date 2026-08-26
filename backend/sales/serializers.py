@@ -14,3 +14,6 @@ class SaleCreateSerializer(serializers.Serializer):
 class SaleCreateResponseSerializer(serializers.Serializer):
     id = serializers.PrimaryKeyRelatedField(queryset=Sale.objects.all())
     status = serializers.CharField()
+
+class SaleCancelSerializer(serializers.Serializer):
+    cancellation_reason = serializers.CharField()
