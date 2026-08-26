@@ -12,6 +12,10 @@ class Sale(models.Model):
       COMPLETED = 'completed'
       CANCELLED = 'cancelled'
 
+    class Users(models.TextChoices):
+          EMPLOYEE = 'Employee'
+          MANAGER = 'Manager'
+          OWNER = 'Owner'
 
     status = models.CharField(
        max_length=9,
@@ -22,6 +26,21 @@ class Sale(models.Model):
     created_at = models.DateTimeField(
        auto_now_add=True
     )
+    
+    cancelled_at = models.DateTimeField(
+        null=True,
+	)
+
+    cancelled_by = models.CharField(
+        max_length=10,
+        choices=Users.choices,
+        null=True
+	)
+
+    cancellation_reason = models.CharField(
+        null=True,
+        max_length=200
+	)
 
 class SaleItem(models.Model):
 	sale = models.ForeignKey(

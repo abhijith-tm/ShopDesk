@@ -2,7 +2,7 @@ from .models import Sale,SaleItem
 from products.models import Product
 from django.db import transaction
 from rest_framework.exceptions import ValidationError
-
+from django.utils import timezone
 @transaction.atomic
 def create_sale(validated_data):
 
@@ -32,6 +32,25 @@ def create_sale(validated_data):
 
     return sale
 
+@transaction.atomic
+def cancel_sale(sale_id,reason,user):
 
+    sale = Sale.objects.get(id=sale_id)
 
+    if sale.status == "cancelled":
+        raise ValidationError("Sale is already cancelled.")
+    elif sale.status=="completed":
+        for item in sale.items.all():
+            product = item.product
+            product.stock_quantity += item.quantity
+            product.save()
+    
 
+    sale.status = "cancelled"
+    sale.cancellation_reason = reason
+    sale.cancelled_by = user
+    sale.cancelled_at = timezone.now()
+
+    sale.save()
+
+    return sale
