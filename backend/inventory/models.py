@@ -11,7 +11,7 @@ class InventoryAdjustment(models.Model):
         related_name="inventory_adjustments"
     )
 
-    quantity = models.IntegerField()
+    quantity_changed = models.IntegerField()
 
     reason = models.CharField(
         max_length=200
