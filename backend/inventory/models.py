@@ -1,13 +1,14 @@
 from django.db import models
 from products.models import Product
+from django.contrib.auth.models import User
 # Create your models here.
 
-class Inventory(models.Model):
+class InventoryAdjustment(models.Model):
 
     product = models.ForeignKey(
         to=Product, 
-        on_delete=models.CASCADE ,
-        related_name="items"
+        on_delete=models.PROTECT ,
+        related_name="inventory_adjustments"
     )
 
     quantity = models.IntegerField()
@@ -16,8 +17,12 @@ class Inventory(models.Model):
         max_length=200
     )
 
-    perfomed_by = models.CharField(
-        max_length=10
+    performed_by = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        related_name="inventory_adjustments"
     )
 
-    done_at = models.DateTimeField()
+    done_at = models.DateTimeField(
+        auto_now_add=True
+    )
