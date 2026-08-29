@@ -4,7 +4,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from .serializers import ProductSerializer
 from .models import Product
 from rest_framework.permissions import IsAuthenticated
-from sales.permission import CanModifyProducts
+from permissions.permission import CanModifyProducts
 # /api/products/  Get ->list all. POST-> create
 
 class ProductListCreateView(ListCreateAPIView):

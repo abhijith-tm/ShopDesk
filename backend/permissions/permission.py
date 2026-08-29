@@ -20,3 +20,13 @@ class CanModifySale(permissions.BasePermission):
                 return False
         else:
             return True
+
+class CanAdjustInventory(permissions.BasePermission):
+    def has_permission(self,request,view):
+        if request.user.groups.filter(name="Employee").exists():
+            if request.method == 'GET':
+                return True
+            else:
+                return False
+        else:
+            return True
