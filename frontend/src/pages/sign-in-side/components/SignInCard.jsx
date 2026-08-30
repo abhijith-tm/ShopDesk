@@ -13,6 +13,9 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import ForgotPassword from './ForgotPassword';
 import { GoogleIcon,  ShopDeskLogo } from './CustomIcons';
+import SignUp from '../../sign-up/SignUp';
+import { Link as RouterLink } from "react-router-dom";
+
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -105,7 +108,7 @@ export default function SignInCard() {
         sx={{ display: 'flex', flexDirection: 'column', width: '100%', gap: 2 }}
       >
         <FormControl>
-          <FormLabel htmlFor="email">Email</FormLabel>
+          <FormLabel sx= {{alignSelf:"flex-start"}} htmlFor="email">Email</FormLabel>
           <TextField
             error={emailError}
             helperText={emailErrorMessage}
@@ -161,7 +164,8 @@ export default function SignInCard() {
           Don&apos;t have an account?{' '}
           <span>
             <Link
-              href="/material-ui/getting-started/templates/sign-in/"
+            component={RouterLink}
+            to="/signup"
               variant="body2"
               sx={{ alignSelf: 'center' }}
             >
