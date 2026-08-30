@@ -1,6 +1,15 @@
 import { useState } from "react"
 import {createUserWithEmailAndPassword} from "firebase/auth"
 import auth from "../firebase/auth";
+
+
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
+
 function Signup(){
 
     const [email,setEmail] =useState("") 
@@ -20,19 +29,33 @@ function Signup(){
         }
     }
     return (
+        <Box     sx={{
+                minHeight: "100vh",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+            }}>
+            <Card>
+                <Stack spacing={2}>
+                    <Typography variant="h4">
+                        Create your account
+                    </Typography>
 
-        
-        <div>
-            <h1>Signup</h1>
-            <form onSubmit={handleSignup}>
-                <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <br/>
-                <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <br />
+                    <TextField label="Name" />
+                    <TextField label="Email" />
+                    <TextField label="Password" type="password" />
+                    <TextField
+                        label="Confirm Password"
+                        type="password"
+                    />
 
-                <button type="submit">Signup</button>
-            </form>
-        </div>
-    )
+                    <Button variant="contained">
+                        Sign Up
+                    </Button>
+                </Stack>
+            </Card>
+        </Box>
+    );
+
 }
 export default Signup
