@@ -17,7 +17,9 @@ import AppTheme from '../shared-theme/AppTheme';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
 import { GoogleIcon, ShopDeskLogo } from './components/CustomIcons';
 import { Link as RouterLink } from "react-router-dom";
-
+import { useState } from 'react';
+import {createUserWithEmailAndPassword,updateProfile} from "firebase/auth"
+import auth from '../../firebase/auth';
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
@@ -68,14 +70,15 @@ export default function SignUp(props) {
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState('');
 
+  const [email,setEmail] =useState("") 
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  
   const validateInputs = () => {
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
-    const name = document.getElementById('name');
 
     let isValid = true;
 
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
       setEmailError(true);
       setEmailErrorMessage('Please enter a valid email address.');
       isValid = false;
@@ -84,7 +87,7 @@ export default function SignUp(props) {
       setEmailErrorMessage('');
     }
 
-    if (!password.value || password.value.length < 6) {
+    if (!password || password.length < 6) {
       setPasswordError(true);
       setPasswordErrorMessage('Password must be at least 6 characters long.');
       isValid = false;
@@ -93,7 +96,7 @@ export default function SignUp(props) {
       setPasswordErrorMessage('');
     }
 
-    if (!name.value || name.value.length < 1) {
+    if (!name || name.length < 1) {
       setNameError(true);
       setNameErrorMessage('Name is required.');
       isValid = false;
@@ -105,18 +108,36 @@ export default function SignUp(props) {
     return isValid;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+
+   const isvalid = validateInputs()
+    
+    if (!isvalid){
+      return
+    }
+
     if (nameError || emailError || passwordError) {
       event.preventDefault();
       return;
     }
-    const data = new FormData(event.currentTarget);
-    console.log({
-      name: data.get('name'),
-      lastName: data.get('lastName'),
-      email: data.get('email'),
-      password: data.get('password'),
+
+    try{
+      const userCredential = await createUserWithEmailAndPassword(
+            auth,email,password
+          )
+        await updateProfile(userCredential.user, {
+        displayName: name
     });
+      console.log(userCredential.user)
+        }catch (error){
+          if (error.code === "auth/email-already-in-use") {
+          setEmailError(true);
+          setEmailErrorMessage("This email is already in use.");
+  } else {
+    console.error(error);
+  }
+    }
   };
 
   return (
@@ -150,7 +171,8 @@ export default function SignUp(props) {
                 error={nameError}
                 helperText={nameErrorMessage}
                 color={nameError ? 'error' : 'primary'}
-              />
+                value={name}
+                onChange={(e) => setName(e.target.value)}              />
             </FormControl>
             <FormControl>
               <FormLabel htmlFor="email">Email</FormLabel>
@@ -165,6 +187,8 @@ export default function SignUp(props) {
                 error={emailError}
                 helperText={emailErrorMessage}
                 color={passwordError ? 'error' : 'primary'}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </FormControl>
             <FormControl>
@@ -181,6 +205,8 @@ export default function SignUp(props) {
                 error={passwordError}
                 helperText={passwordErrorMessage}
                 color={passwordError ? 'error' : 'primary'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </FormControl>
       
@@ -188,7 +214,6 @@ export default function SignUp(props) {
               type="submit"
               fullWidth
               variant="contained"
-              onClick={validateInputs}
             >
               Sign up
             </Button>

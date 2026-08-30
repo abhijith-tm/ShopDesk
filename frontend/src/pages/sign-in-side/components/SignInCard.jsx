@@ -18,7 +18,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { useState } from 'react';
 import { signInWithEmailAndPassword } from "firebase/auth"
 import auth from "../../../firebase/auth"
-
+import Alert from '@mui/material/Alert';
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
@@ -43,6 +43,7 @@ export default function SignInCard() {
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [open, setOpen] = React.useState(false);
+  const [loginError,setLoginError] = useState("")
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -73,7 +74,7 @@ export default function SignInCard() {
 
       console.log(userCredential.user);
     } catch (error) {
-      console.error(error);
+      setLoginError("Unable to sign in. Please check your credentials and try again")
     }
   };
 
@@ -172,6 +173,11 @@ export default function SignInCard() {
           control={<Checkbox value="remember" color="primary" />}
           label="Remember me"
         />
+        {loginError && (
+      <Alert severity="error">
+          {loginError}
+      </Alert>
+      )}
         <ForgotPassword open={open} handleClose={handleClose} />
         <Button type="submit" fullWidth variant="contained" onClick={validateInputs}>
           Sign in
