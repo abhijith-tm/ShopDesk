@@ -15,7 +15,9 @@ import ForgotPassword from './ForgotPassword';
 import { GoogleIcon,  ShopDeskLogo } from './CustomIcons';
 import SignUp from '../../sign-up/SignUp';
 import { Link as RouterLink } from "react-router-dom";
-
+import { useState } from 'react';
+import { signInWithEmailAndPassword } from "firebase/auth"
+import auth from "../../../firebase/auth"
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -50,25 +52,36 @@ export default function SignInCard() {
     setOpen(false);
   };
 
-  const handleSubmit = (event) => {
-    if (emailError || passwordError) {
-      event.preventDefault();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    const isValid = validateInputs();
+
+    if (!isValid) {
       return;
     }
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      console.log(userCredential.user);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const validateInputs = () => {
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
 
     let isValid = true;
 
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
+    if (!email|| !/\S+@\S+\.\S+/.test(email)) {
       setEmailError(true);
       setEmailErrorMessage('Please enter a valid email address.');
       isValid = false;
@@ -77,7 +90,7 @@ export default function SignInCard() {
       setEmailErrorMessage('');
     }
 
-    if (!password.value || password.value.length < 6) {
+    if (!password|| password.length < 6) {
       setPasswordError(true);
       setPasswordErrorMessage('Password must be at least 6 characters long.');
       isValid = false;
@@ -103,13 +116,15 @@ export default function SignInCard() {
       </Typography>
       <Box
         component="form"
-        onSubmit={handleSubmit}
+        onSubmit={handleLogin}
         noValidate
         sx={{ display: 'flex', flexDirection: 'column', width: '100%', gap: 2 }}
       >
         <FormControl>
           <FormLabel sx= {{alignSelf:"flex-start"}} htmlFor="email">Email</FormLabel>
           <TextField
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}  
             error={emailError}
             helperText={emailErrorMessage}
             id="email"
@@ -145,11 +160,12 @@ export default function SignInCard() {
             type="password"
             id="password"
             autoComplete="current-password"
-            autoFocus
             required
             fullWidth
             variant="outlined"
             color={passwordError ? 'error' : 'primary'}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </FormControl>
         <FormControlLabel
