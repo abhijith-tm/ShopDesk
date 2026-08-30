@@ -7,7 +7,7 @@ import AuthContext from "./context/authContext"
 import {BrowserRouter,Routes,Route} from "react-router-dom"
 import Dashboard from "./pages/dashboard"
 import ProtectedRoute from "./components/protectedRoute"
-
+import SignInSide from "./pages/sign-in-side/SignInSide"
 function App(){
   const {user,logout} = useContext(AuthContext)
   return(
@@ -15,7 +15,7 @@ function App(){
             <BrowserRouter>
             <Routes>
 
-                <Route path="/login" element={<Login />} />
+                <Route path="/login" element={<SignInSide/>} />
                 <Route path="/signup" element={<SignUp />} />
 
                 <Route
