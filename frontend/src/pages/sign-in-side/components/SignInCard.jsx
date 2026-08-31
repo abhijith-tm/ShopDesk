@@ -19,6 +19,8 @@ import { useState } from 'react';
 import { signInWithEmailAndPassword } from "firebase/auth"
 import auth from "../../../firebase/auth"
 import Alert from '@mui/material/Alert';
+import { useNavigate }from 'react-router-dom';
+
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
@@ -44,6 +46,7 @@ export default function SignInCard() {
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [open, setOpen] = React.useState(false);
   const [loginError,setLoginError] = useState("")
+  const navigate = useNavigate()
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -71,8 +74,9 @@ export default function SignInCard() {
         email,
         password
       );
-
       console.log(userCredential.user);
+      navigate("/dashboard")
+ 
     } catch (error) {
       setLoginError("Unable to sign in. Please check your credentials and try again")
     }

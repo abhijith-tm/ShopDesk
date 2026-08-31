@@ -1,11 +1,10 @@
-import Lists from "./pages/react-quickstart/lists"
-import Login from "./pages/login"
+
 import SignUp from "./pages/sign-up/SignUp"
 import Event from "./pages/react-quickstart/event"
 import { useContext } from "react"
 import AuthContext from "./context/authContext"
 import {BrowserRouter,Routes,Route} from "react-router-dom"
-import Dashboard from "./pages/dashboard"
+import Dashboard from "./pages/dashboard/Dashboard"
 import ProtectedRoute from "./components/protectedRoute"
 import SignInSide from "./pages/sign-in-side/SignInSide"
 function App(){
@@ -17,6 +16,7 @@ function App(){
 
                 <Route path="/login" element={<SignInSide/>} />
                 <Route path="/signup" element={<SignUp />} />
+          
 
                 <Route
                 path="/dashboard"
@@ -24,8 +24,8 @@ function App(){
                   <ProtectedRoute>
                     <Dashboard/>
                   </ProtectedRoute>}/>
+                </Routes>
 
-            </Routes>
         </BrowserRouter>
 
 
