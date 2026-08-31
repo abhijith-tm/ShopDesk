@@ -26,7 +26,7 @@ function AuthProvider({children}){
 
     const logout = () => {
         return signOut(auth)
-    }
+    } 
     return(
         //Context object(AuthContext) provides a special React component:<AuthContext,provider>
         <AuthContext.Provider value={{user,logout,loading}}>  {/* user is a object literal */}

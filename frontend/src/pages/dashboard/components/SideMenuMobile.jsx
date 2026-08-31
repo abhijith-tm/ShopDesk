@@ -10,8 +10,11 @@ import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import MenuButton from './MenuButton';
 import MenuContent from './MenuContent';
 import CardAlert from './CardAlert';
-import
+import { useContext } from "react"
+import AuthContext from "../../../context/authContext"
 function SideMenuMobile({ open, toggleDrawer }) {
+
+  const {user}=useContext(AuthContext)
   return (
     <Drawer
       anchor="right"
@@ -43,7 +46,7 @@ function SideMenuMobile({ open, toggleDrawer }) {
               sx={{ width: 24, height: 24 }}
             />
             <Typography component="p" variant="h6">
-              {}
+              {user?.displayName}
             </Typography>
           </Stack>
           <MenuButton showBadge>
