@@ -13,7 +13,7 @@ import CardAlert from './CardAlert';
 import { useContext } from "react"
 import AuthContext from "../../../context/authContext"
 function SideMenuMobile({ open, toggleDrawer }) {
-
+  const {logout}=useContext(AuthContext)
   const {user}=useContext(AuthContext)
   return (
     <Drawer
@@ -60,7 +60,7 @@ function SideMenuMobile({ open, toggleDrawer }) {
         </Stack>
         <CardAlert />
         <Stack sx={{ p: 2 }}>
-          <Button variant="outlined" fullWidth startIcon={<LogoutRoundedIcon />}>
+          <Button onClick={logout} variant="outlined" fullWidth startIcon={<LogoutRoundedIcon />}>
             Logout
           </Button>
         </Stack>
