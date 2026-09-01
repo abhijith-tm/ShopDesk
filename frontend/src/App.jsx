@@ -7,12 +7,16 @@ import {BrowserRouter,Routes,Route} from "react-router-dom"
 import Dashboard from "./pages/dashboard/Dashboard"
 import ProtectedRoute from "./components/protectedRoute"
 import SignInSide from "./pages/sign-in-side/SignInSide"
+import Test from "./test"
+
 function App(){
   const {user,logout} = useContext(AuthContext)
   return(
     <>
             <BrowserRouter>
             <Routes>
+
+                <Route path="/test" element={<Test/>} />
 
                 <Route path="/login" element={<SignInSide/>} />
                 <Route path="/signup" element={<SignUp />} />
