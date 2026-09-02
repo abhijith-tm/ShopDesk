@@ -12,6 +12,14 @@ class ProductListCreateView(ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(business=self.request.user.business)
+
+    def get_queryset(self):
+        return Product.objects.filter(
+        business=self.request.user.business
+        )
+
 #/api/products/<id>/  GET    → retrieve one , PUT    → update, PATCH  → partial update,  DELETE → delete
 class ProductRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated,CanModifyProducts]

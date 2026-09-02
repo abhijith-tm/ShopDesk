@@ -15,7 +15,7 @@ class CreateSaleView(CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        sale = create_sale(serializer.validated_data)
+        sale = create_sale(serializer.validated_data,request.user)
 
         response_serializer = SaleCreateResponseSerializer(sale)
 
@@ -26,7 +26,6 @@ class CreateSaleView(CreateAPIView):
         #     "is_owner": request.user.groups.filter(name="Owner").exists(),
         #     })
         return Response(
-            request.user,
             response_serializer.data,
             status = status.HTTP_201_CREATED,
         )
