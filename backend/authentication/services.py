@@ -1,12 +1,18 @@
-from .models import Business
-from models import User
 from django.contrib.auth.models import Group
-def create_owner(self, validated_data):
-    business_name = validated_data.pop("business_name")
+from django.db import transaction
+
+from .models import Business, User
+
+
+@transaction.atomic
+def create_owner(validated_data):
+    business_name = validated_data.pop("business")
     password = validated_data.pop("password")
     email = validated_data.pop("email")
 
-    business = Business.objects.create(name=business_name)
+    business = Business.objects.create(
+        name=business_name
+    )
 
     user = User.objects.create_user(
         username=email,
