@@ -2,6 +2,7 @@ from django.db import models
 from products.models import Product
 from django.core.validators import MinValueValidator
 from django.db.models import Q
+from authentication.models import Business
 
 # Create your models here.
 
@@ -16,6 +17,11 @@ class Sale(models.Model):
           EMPLOYEE = 'Employee'
           MANAGER = 'Manager'
           OWNER = 'Owner'
+
+    business = models.ForeignKey(
+        to=Business, 
+        on_delete=models.PROTECT ,
+    )
 
     status = models.CharField(
        max_length=9,

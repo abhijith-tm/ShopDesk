@@ -1,9 +1,14 @@
 from django.db import models
 from products.models import Product
-from django.contrib.auth.models import User
+from authentication.models import Business,User
 # Create your models here.
 
 class InventoryAdjustment(models.Model):
+
+    business = models.ForeignKey(
+            to=Business, 
+            on_delete=models.PROTECT ,
+        )
 
     product = models.ForeignKey(
         to=Product, 

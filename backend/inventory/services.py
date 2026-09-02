@@ -1,5 +1,6 @@
 from .models import InventoryAdjustment
 from products.models import Product
+from authentication.models import Business
 from django.db import transaction
 from rest_framework.exceptions import ValidationError
 
@@ -13,6 +14,7 @@ def create_inventory_adjustment(validated_data,user):
             raise  ValidationError("Not enough stock to reduce")
         else:
             inventory_adjustment= InventoryAdjustment.objects.create( #also saves to db
+                business = Business,
                 product = product,
                 quantity_changed = validated_data["quantity_changed"],
                 reason = validated_data["reason"],

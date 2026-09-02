@@ -2,11 +2,17 @@ from django.db import models
 from django.core.validators import MinValueValidator
 
 from django.db.models import Q
+from authentication.models import Business
 
 # Create your models here.
 
 class Product(models.Model):
     # id = models.CharField() // djnago Django automatically adds a primary-key field if you don't define one.
+    business = models.ForeignKey(
+            to=Business, 
+            on_delete=models.PROTECT ,
+    )
+
     name = models.CharField(max_length=200)
     cost_price = models.DecimalField(
         max_digits=8,
