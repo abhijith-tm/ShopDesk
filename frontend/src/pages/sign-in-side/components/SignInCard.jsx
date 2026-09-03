@@ -20,7 +20,7 @@ import { signInWithEmailAndPassword } from "firebase/auth"
 import auth from "../../../firebase/auth"
 import Alert from '@mui/material/Alert';
 import { useNavigate }from 'react-router-dom';
-
+import { login } from "../../../API/auth";
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
@@ -69,12 +69,8 @@ export default function SignInCard() {
     }
 
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      console.log(userCredential.user);
+    const response = await login(email, password);
+      console.log(response.data);
       navigate("/dashboard")
  
     } catch (error) {
