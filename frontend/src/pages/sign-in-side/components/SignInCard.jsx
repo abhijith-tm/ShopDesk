@@ -21,6 +21,9 @@ import auth from "../../../firebase/auth"
 import Alert from '@mui/material/Alert';
 import { useNavigate }from 'react-router-dom';
 import { login } from "../../../API/auth";
+import api from "../../../API/client";
+import AuthContext from '../../../authentication/AuthContext';
+import { useContext } from 'react';
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
@@ -48,6 +51,7 @@ export default function SignInCard() {
   const [loginError,setLoginError] = useState("")
   const navigate = useNavigate()
 
+const { login: setAccessToken } = useContext(AuthContext);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -70,12 +74,39 @@ export default function SignInCard() {
 
     try {
     const response = await login(email, password);
-      console.log(response.data);
-      navigate("/dashboard")
+
+    console.log("LOGIN:", response.data);
+
+    setAccessToken(response.data.access);
+
+    console.log("TOKEN SET");
+
+    const products = await api.get("products/");
+
+    console.log("PRODUCTS:", products.data);
+
+} catch (error) {
+    console.log("ERROR:", error);
+    setLoginError("Unable to sign in. Please check your credentials and try again");
+}
+
+    // try {
+    // const response = await login(email, password);
+    //   console.log(response.data);
+    //   setAccessToken(response.data.access)
+
+
+    //   // test protected request
+    //   const products = await api.get("products/");
+    //   console.log(products.data);
+
+    //   //----------------------------------------------
+
+    //   navigate("/dashboard")
  
-    } catch (error) {
-      setLoginError("Unable to sign in. Please check your credentials and try again")
-    }
+    // } catch (error) {
+    //   setLoginError("Unable to sign in. Please check your credentials and try again")
+    // }
   };
 
   const validateInputs = () => {

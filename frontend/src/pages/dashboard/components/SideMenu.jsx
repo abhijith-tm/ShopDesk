@@ -10,7 +10,7 @@ import MenuContent from './MenuContent';
 import CardAlert from './CardAlert';
 import OptionsMenu from './OptionsMenu';
 import { useContext } from "react"
-import AuthContext from "../../../context/authContext"
+import AuthContext from "../../../authentication/AuthContext"
 const drawerWidth = 240;
 
 const Drawer = styled(MuiDrawer)({

@@ -11,7 +11,7 @@ import MenuButton from './MenuButton';
 import MenuContent from './MenuContent';
 import CardAlert from './CardAlert';
 import { useContext } from "react"
-import AuthContext from "../../../context/authContext"
+import AuthContext from "../../../authentication/AuthContext"
 function SideMenuMobile({ open, toggleDrawer }) {
   const {logout}=useContext(AuthContext)
   const {user}=useContext(AuthContext)

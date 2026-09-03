@@ -10,7 +10,7 @@ import ListItemIcon, { listItemIconClasses } from '@mui/material/ListItemIcon';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 import MenuButton from './MenuButton';
-import AuthContext from '../../../context/authContext';
+import AuthContext from '../../../authentication/AuthContext';
 import { useContext } from 'react';
 import Button from '@mui/material/Button';
 const MenuItem = styled(MuiMenuItem)({
