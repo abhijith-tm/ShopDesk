@@ -30,5 +30,7 @@ urlpatterns = [
     path('api/sales/',include('sales.urls')),
     path('api/inventory/',include('inventory.urls')),
     path('api/register/owner/',include('authentication.urls')),
+    path('api/auth/',include('authentication.urls')),
+
 
 ]

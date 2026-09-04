@@ -5,9 +5,10 @@ from rest_framework import status
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import OwnerRegisterSerializer
+from .serializers import OwnerRegisterSerializer,UserDetailsSerializer
 from .services import create_owner
-
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
 
 class OwnerRegisterView(CreateAPIView):
     serializer_class = OwnerRegisterSerializer
@@ -55,3 +56,10 @@ class CustomTokenObtainPairView(TokenObtainPairView):
         )
 
         return response
+
+class MeView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        serializer = UserDetailsSerializer(request.user)
+        return Response(serializer.data)

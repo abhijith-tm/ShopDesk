@@ -74,39 +74,21 @@ const { login: setAccessToken } = useContext(AuthContext);
 
     try {
     const response = await login(email, password);
-
-    console.log("LOGIN:", response.data);
-
-    setAccessToken(response.data.access);
-
-    console.log("TOKEN SET");
-
-    const products = await api.get("products/");
-
-    console.log("PRODUCTS:", products.data);
-
-} catch (error) {
-    console.log("ERROR:", error);
-    setLoginError("Unable to sign in. Please check your credentials and try again");
-}
-
-    // try {
-    // const response = await login(email, password);
-    //   console.log(response.data);
-    //   setAccessToken(response.data.access)
+      console.log(response.data);
+      setAccessToken(response.data.access)
 
 
-    //   // test protected request
-    //   const products = await api.get("products/");
-    //   console.log(products.data);
+      // test protected request
+      const products = await api.get("products/");
+      console.log(products.data);
 
-    //   //----------------------------------------------
+      //----------------------------------------------
 
-    //   navigate("/dashboard")
+      navigate("/dashboard")
  
-    // } catch (error) {
-    //   setLoginError("Unable to sign in. Please check your credentials and try again")
-    // }
+    } catch (error) {
+      setLoginError("Unable to sign in. Please check your credentials and try again")
+    }
   };
 
   const validateInputs = () => {
