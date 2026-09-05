@@ -8,6 +8,7 @@ import Dashboard from "./pages/dashboard/Dashboard"
 import ProtectedRoute from "./components/protectedRoute"
 import SignInSide from "./pages/sign-in-side/SignInSide"
 import Test from "./test"
+import Products from "./pages/products/Products"
 
 function App(){
   const {user,logout} = useContext(AuthContext)
@@ -27,6 +28,13 @@ function App(){
                 element={
                   <ProtectedRoute>
                     <Dashboard/>
+                  </ProtectedRoute>}/>
+
+                <Route
+                path="/products"
+                element={
+                  <ProtectedRoute>
+                    <Products/>
                   </ProtectedRoute>}/>
                 </Routes>
 
