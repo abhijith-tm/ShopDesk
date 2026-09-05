@@ -6,3 +6,7 @@ export const login = (username,password) =>{
         password
     })
 }
+
+export const getMe = () => {
+    return api.get("auth/me/");
+}

@@ -20,7 +20,7 @@ import { signInWithEmailAndPassword } from "firebase/auth"
 import auth from "../../../firebase/auth"
 import Alert from '@mui/material/Alert';
 import { useNavigate }from 'react-router-dom';
-import { login } from "../../../API/auth";
+import { login, getMe } from "../../../API/auth";
 import api from "../../../API/client";
 import AuthContext from '../../../authentication/AuthContext';
 import { useContext } from 'react';
@@ -51,7 +51,7 @@ export default function SignInCard() {
   const [loginError,setLoginError] = useState("")
   const navigate = useNavigate()
 
-const { login: setAccessToken } = useContext(AuthContext);
+const { login: setAccessToken, setUser } = useContext(AuthContext);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -73,18 +73,14 @@ const { login: setAccessToken } = useContext(AuthContext);
     }
 
     try {
-    const response = await login(email, password);
-      console.log(response.data);
-      setAccessToken(response.data.access)
+      const response = await login(email, password);
+      setAccessToken(response.data.access);
 
+      // Fetch the user's details and update the AuthContext
+      const meResponse = await getMe();
+      setUser(meResponse.data);
 
-      // test protected request
-      const products = await api.get("products/");
-      console.log(products.data);
-
-      //----------------------------------------------
-
-      navigate("/dashboard")
+      navigate("/dashboard");
  
     } catch (error) {
       setLoginError("Unable to sign in. Please check your credentials and try again")

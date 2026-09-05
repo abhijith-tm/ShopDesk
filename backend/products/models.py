@@ -35,6 +35,9 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    image = models.ImageField(upload_to='product_images/', blank=True, null=True)
+
+
     class Meta:
         constraints = [ #gives database level integrity - cant change database values to negative
             models.CheckConstraint(
