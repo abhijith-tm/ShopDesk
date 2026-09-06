@@ -1,6 +1,5 @@
 
 import SignUp from "./pages/sign-up/SignUp"
-import Event from "./pages/react-quickstart/event"
 import { useContext } from "react"
 import AuthContext from "./authentication/AuthContext"
 import {BrowserRouter,Routes,Route} from "react-router-dom"

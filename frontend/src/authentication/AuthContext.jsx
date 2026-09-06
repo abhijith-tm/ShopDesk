@@ -17,7 +17,7 @@ function AuthProvider({ children }) {
         const restoreAuth = async () => {
             try {
                 // 1. Try to get a new access token using the refresh cookie
-                const refreshResponse = await axios.post("http://127.0.0.1:8000/api/token/refresh/", {}, {
+                const refreshResponse = await axios.post("http://localhost:8000/api/token/refresh/", {}, {
                     withCredentials: true
                 });
                 

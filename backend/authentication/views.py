@@ -9,6 +9,8 @@ from .serializers import OwnerRegisterSerializer,UserDetailsSerializer
 from .services import create_owner
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
+from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework.response import Response
 
 class OwnerRegisterView(CreateAPIView):
     serializer_class = OwnerRegisterSerializer
@@ -56,6 +58,22 @@ class CustomTokenObtainPairView(TokenObtainPairView):
         )
 
         return response
+
+
+
+class CustomTokenRefreshView(TokenRefreshView):
+
+    def post(self, request, *args, **kwargs):
+        refresh = request.COOKIES.get("refresh_token")
+
+        if not refresh:
+            return Response(
+                {"detail": "Refresh token not found"},
+                status=401
+            )
+
+        request.data["refresh"] = refresh
+        return super().post(request, *args, **kwargs)
 
 class MeView(APIView):
     permission_classes = [IsAuthenticated]
