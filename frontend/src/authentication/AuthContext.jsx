@@ -48,7 +48,14 @@ function AuthProvider({ children }) {
         setAccessTokenState(token);
     };
 
-    const logout = () => {
+    const logout = async () => {
+        try {
+            await axios.post("http://localhost:8000/api/auth/logout/", {}, {
+                withCredentials: true
+            });
+        } catch (error) {
+            console.error("Logout failed on backend", error);
+        }
         clearAccessToken();
         setAccessTokenState(null);
         setUser(null);

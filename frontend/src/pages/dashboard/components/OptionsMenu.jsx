@@ -12,13 +12,15 @@ import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 import MenuButton from './MenuButton';
 import AuthContext from '../../../authentication/AuthContext';
 import { useContext } from 'react';
-import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
+
 const MenuItem = styled(MuiMenuItem)({
   margin: '2px 0',
 });
 
 export default function OptionsMenu() {
-  const {logout}=useContext(AuthContext)
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -28,6 +30,13 @@ export default function OptionsMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = async () => {
+    handleClose();
+    await logout();
+    navigate('/login');
+  };
+
   return (
     <React.Fragment>
       <MenuButton
@@ -64,7 +73,7 @@ export default function OptionsMenu() {
         <MenuItem onClick={handleClose}>Settings</MenuItem>
         <Divider />
         <MenuItem
-          onClick={handleClose}
+          onClick={handleLogout}
           sx={{
             [`& .${listItemIconClasses.root}`]: {
               ml: 'auto',
@@ -72,9 +81,7 @@ export default function OptionsMenu() {
             },
           }}
         >
-          <ListItemText>
-            <Button onClick={logout}>Logout</Button>
-          </ListItemText>
+          <ListItemText>Logout</ListItemText>
           <ListItemIcon>
             <LogoutRoundedIcon fontSize="small" />
           </ListItemIcon>

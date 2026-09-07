@@ -81,3 +81,11 @@ class MeView(APIView):
     def get(self, request):
         serializer = UserDetailsSerializer(request.user)
         return Response(serializer.data)
+
+class LogoutView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        response = Response(status=status.HTTP_204_NO_CONTENT)
+        response.delete_cookie("refresh_token", samesite="Lax")
+        return response
