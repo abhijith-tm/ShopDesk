@@ -1,102 +1,152 @@
-Just a throw away project, lost interest. learn a tone about django and react
-
-
 # ShopDesk
 
-ShopDesk is a shop management system I'm building to manage the day-to-day operations of a small shop.
+ShopDesk is a shop management system I built as a learning project to understand how real-world backend and frontend applications are designed.
 
-The main goal of this project is to build something useful while learning how real-world backend applications are designed, tested, and deployed.
+The project started as a small inventory management idea and evolved into a practical project where I learned a lot about Django, Django REST Framework, PostgreSQL, React, authentication, permissions, API design, database transactions, and frontend-backend integration.
 
 ## Tech Stack
 
 ### Backend
+
 - Python
 - Django
 - Django REST Framework
 - PostgreSQL
+- Simple JWT
 
 ### Frontend
+
 - React
+- Material UI
+- Axios
+- React Router
 
 ### Tools
+
 - Git
 - GitHub
 
-## What ShopDesk Will Do
-
-The application will eventually provide:
+## What ShopDesk Does
 
 - Product and inventory management
 - Sales management
-- Sale cancellation/refunds
+- Sale cancellation and stock restoration
 - Expense tracking
-- Dashboard
-- Sales and profit reports
-- Inventory reports
-- User authentication and permissions
+- User authentication
+- User roles and permissions
+- Business-level data isolation
+- Protected frontend routes
 
-## Current Progress
+## What I Built
 
 ### Products
-- [x] Product model
-- [x] Database validation and constraints
-- [x] CRUD API
-- [x] Tests
+
+- Product model
+- Product CRUD API
+- Database validation
+- Stock management
+- Business-level data isolation
+- API tests
 
 ### Sales
-- [x] Sale model
-- [x] SaleItem model
-- [x] Historical product snapshots
-- [x] Sale serializers
-- [x] Sale creation service
-- [x] Stock validation
-- [x] Stock deduction
-- [x] Database transactions
-- [x] Transaction rollback tests
-- [ ] Sales API
-- [ ] Sale cancellation/refund
-- [ ] Sales history API
+
+- Sale and SaleItem models
+- Historical product information stored with sales
+- Sale creation service
+- Stock validation
+- Automatic stock deduction
+- Database transactions
+- Transaction rollback handling
+- Sale cancellation
+- Stock restoration after cancellation
+- Sales history API
+- Business-level data isolation
+
+### Inventory
+
+- Inventory adjustment model
+- Stock adjustment tracking
+- Adjustment reason and user tracking
+- Business-level data isolation
 
 ### Expenses
-- [ ] Expense model
-- [ ] Expense API
-- [ ] Expense tests
 
-### Dashboard & Reports
-- [ ] Dashboard
-- [ ] Sales reports
-- [ ] Profit/loss reports
-- [ ] Expense reports
-- [ ] Inventory reports
+- Expense model
+- Expense API
+- Expense tests
+
+### Authentication & Authorization
+
+- Custom user model
+- Business creation during owner registration
+- Owner registration
+- JWT authentication
+- Access and refresh token system
+- HttpOnly refresh token cookie
+- Current-user (`/me/`) API
+- Django Groups for roles
+- Owner, Manager and Employee roles
+- Role-based API permissions
+- Business-level data isolation
 
 ### Frontend
-- [x] React setup
-- [x] Authentication
-- [ ] Product management
-- [ ] Sales/POS screen
-- [ ] Sales history
-- [ ] Expenses
-- [ ] Dashboard
-- [ ] Reports
 
-### Deployment
-- [ ] Docker
-- [ ] AWS deployment
-- [ ] CI/CD
-- [ ] Production configuration
+- React + Vite setup
+- Material UI
+- Login page
+- Authentication context
+- JWT access token management
+- Axios API client
+- Axios authentication interceptor
+- Protected routes
+- Current-user state
+- Authentication restoration after page refresh
+- Products page
+
+## What I Learned
+
+This project was mainly a learning experience. While building it, I learned:
+
+- How Django projects and applications are structured
+- Building REST APIs with Django REST Framework
+- Designing database models and relationships
+- PostgreSQL integration
+- Serializers, views and permissions in DRF
+- Service-layer patterns for business logic
+- Database transactions with `transaction.atomic`
+- Handling stock consistency during sales and cancellations
+- JWT authentication
+- Access vs refresh tokens
+- HttpOnly cookies
+- Role-based permissions
+- Multi-business data isolation
+- React state and Context API
+- React Router and protected routes
+- Axios interceptors
+- Connecting a React frontend with a Django backend
+- Testing backend business logic
+- Debugging frontend/backend authentication issues
+- Using Git and GitHub throughout development
 
 ## Project Structure
 
-The project is currently split into a Django backend and a React frontend.
+The project is split into a Django backend and React frontend.
 
 ```text
 ShopDesk/
 ├── backend/
+│   ├── authentication/
 │   ├── products/
 │   ├── sales/
-│   └── ...
+│   ├── inventory/
+│   ├── expenses/
+│   └── config/
 │
 ├── frontend/
-│   └── ...
+│   └── src/
+│       ├── API/
+│       ├── authentication/
+│       ├── pages/
+│       └── ...
 │
 └── README.md
