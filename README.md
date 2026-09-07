@@ -1,3 +1,6 @@
+Just a throw away project, lost interest. learn a tone about django and react
+
+
 # ShopDesk
 
 ShopDesk is a shop management system I'm building to manage the day-to-day operations of a small shop.
